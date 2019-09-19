@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+html, body {
+  width:  100%;
+  height: 100%;
+  margin: 0;
+}
+</style>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+
+attribute  vec4 vPosition;
+attribute  vec4 vColor;
+attribute vec2 vTexCoord;
+
+varying vec4 fColor;
+varying vec2 fTexCoord;
+varying mat4 fDrainMatrix;
+
+uniform mat4 modelViewMatrix;
+uniform mat4 projectionMatrix;
+uniform mat4 scaleMatrix;
+uniform vec4 cameraPos;
+
+uniform int lighting;
+
+void main() 
+{
+    gl_Position = projectionMatrix*modelViewMatrix*scaleMatrix*vPosition;
+    fColor = vColor;
+	fTexCoord = vTexCoord;
+	float distance = distance(vPosition,cameraPos);
+	float drain = (distance < 3.0) ? 1.0 : (3.0/distance - 0.2)/0.8;
+
+	if(lighting==0) drain = 1.0;
+
+	fDrainMatrix = mat4(	drain,  0.0,	0.0,	0.0,
+		  		  			0.0,	drain,  0.0,	0.0,
+		    				0.0,	0.0,	drain,	0.0,
+		    				0.0,	0.0,	0.0,	1.0 );
+} 
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+precision mediump float;
+
+uniform int i;
+
+varying vec4 fColor;
+varying vec2 fTexCoord;
+varying mat4 fDrainMatrix;
+
+uniform sampler2D floor;
+uniform sampler2D wall;
+uniform sampler2D ceiling;
+uniform sampler2D pic;
+uniform sampler2D start;
+uniform sampler2D fin;
+uniform sampler2D open;
+uniform sampler2D rat;
+
+void main()
+{
+
+    if(i==1) gl_FragColor = fDrainMatrix*texture2D(floor, fTexCoord);
+    else if(i==2) gl_FragColor = fDrainMatrix*texture2D(ceiling, fTexCoord);
+    else if(i==3) gl_FragColor = fDrainMatrix*texture2D(pic, fTexCoord);
+    else if(i==4) gl_FragColor = vec4(texture2D(start, fTexCoord).rgb,texture2D(start, fTexCoord).a*.5);
+    else if(i==5) gl_FragColor = vec4(texture2D(fin, fTexCoord).rgb,texture2D(fin, fTexCoord).a*.5);
+    else if(i==6) gl_FragColor = vec4(texture2D(open, fTexCoord).rgb,texture2D(open, fTexCoord).a*.5);
+    else if(i==7) gl_FragColor = texture2D(rat, fTexCoord);
+    else if(i==8) gl_FragColor = fColor;
+	else gl_FragColor = fDrainMatrix*texture2D(wall, fTexCoord);
+}
+</script>
+
+<script type="text/javascript" src="webgl-utils.js"></script>
+<script type="text/javascript" src="initShaders.js"></script>
+<script type="text/javascript" src="MV.js"></script>
+<script type="text/javascript" src="maze.js"></script>
+
+<body>
+<canvas id="gl-canvas" width="683" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+<img id = "texImage" src = "http://ee.cooper.edu/~goldfarb/maze/wall.bmp" crossOrigin="use-credentials" hidden></img>
+</body>
+</html>
