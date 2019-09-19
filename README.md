@@ -59,11 +59,11 @@ There are four of these textures.
 
   - OpenGL floating text. 
 
-    I considered changing this to WebGL, but I left it like the original for accuracy.)
+    I considered changing this to WebGL, but I left it like the original for accuracy.
 
   - Start button. 
 
-    This appears in the square immediately in front of the camera. (the camera is rotated at initialization until it is facing an open cell.
+    This appears in the square immediately in front of the camera. (The camera is rotated at initialization until it is facing an open cell.)
 
   - Smileface
   
