@@ -2,7 +2,7 @@
 
 In windows 95 (and a few later versions of Windows) there was a screensaver that rendered and then solved a 3D maze with a a few interactive obstacles. This project is a recreation of that screensaver using WebGL and Javascript. It was created in Spring 2019. The matrix libraries used are [from here](https://github.com/esangel/WebGL/tree/master/Common) and under the MIT License.
 
-The project can be tested live [here](https://ibid-11962.github.io/Windows-95-3D-Maze-Screensaver/)
+[The project can be tested live here](https://ibid-11962.github.io/Windows-95-3D-Maze-Screensaver/)
 
 For comparison, a YouTube sample of the original screensaver can be found at https://www.youtube.com/watch?v=7-yMd9Kt4mQ
 
