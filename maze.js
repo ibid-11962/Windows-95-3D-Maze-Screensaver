@@ -30,7 +30,7 @@ var ratX,ratY,ratdX,ratdY,rattheta,ratdtheta;
 var polytheta=0;
 var height =0;
 
-var near = 0.1;
+var near = 0.01;
 var far = 50.0;
 var fovy = 90;  // Field-of-view in Y direction angle (in degrees)
 var aspect;     // Viewport aspect ratio
